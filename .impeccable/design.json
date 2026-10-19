@@ -1,0 +1,368 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-19T13:38:06.054330+00:00",
+  "title": "Design System: Boxyland Lock",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Primary",
+        "tonalRamp": [
+          "oklch(15% 0.1456 231.66)",
+          "oklch(26% 0.1456 231.66)",
+          "oklch(38% 0.1456 231.66)",
+          "oklch(49% 0.1456 231.66)",
+          "oklch(61% 0.1456 231.66)",
+          "oklch(72% 0.1456 231.66)",
+          "oklch(84% 0.1456 231.66)",
+          "oklch(95% 0.1456 231.66)"
+        ]
+      },
+      "primary-light": {
+        "role": "primary",
+        "displayName": "Primary Light",
+        "tonalRamp": [
+          "oklch(15% 0.0718 224.96)",
+          "oklch(26% 0.0718 224.96)",
+          "oklch(38% 0.0718 224.96)",
+          "oklch(49% 0.0718 224.96)",
+          "oklch(61% 0.0718 224.96)",
+          "oklch(72% 0.0718 224.96)",
+          "oklch(84% 0.0718 224.96)",
+          "oklch(95% 0.0718 224.96)"
+        ]
+      },
+      "blue-wash": {
+        "role": "primary",
+        "displayName": "Blue Wash",
+        "tonalRamp": [
+          "oklch(15% 0.0242 230.43)",
+          "oklch(26% 0.0242 230.43)",
+          "oklch(38% 0.0242 230.43)",
+          "oklch(49% 0.0242 230.43)",
+          "oklch(61% 0.0242 230.43)",
+          "oklch(72% 0.0242 230.43)",
+          "oklch(84% 0.0242 230.43)",
+          "oklch(95% 0.0242 230.43)"
+        ]
+      },
+      "blue-text": {
+        "role": "primary",
+        "displayName": "Blue Text",
+        "tonalRamp": [
+          "oklch(15% 0.1038 230.10)",
+          "oklch(26% 0.1038 230.10)",
+          "oklch(38% 0.1038 230.10)",
+          "oklch(49% 0.1038 230.10)",
+          "oklch(61% 0.1038 230.10)",
+          "oklch(72% 0.1038 230.10)",
+          "oklch(84% 0.1038 230.10)",
+          "oklch(95% 0.1038 230.10)"
+        ]
+      },
+      "green": {
+        "role": "secondary",
+        "displayName": "Green",
+        "tonalRamp": [
+          "oklch(15% 0.1699 149.21)",
+          "oklch(26% 0.1699 149.21)",
+          "oklch(38% 0.1699 149.21)",
+          "oklch(49% 0.1699 149.21)",
+          "oklch(61% 0.1699 149.21)",
+          "oklch(72% 0.1699 149.21)",
+          "oklch(84% 0.1699 149.21)",
+          "oklch(95% 0.1699 149.21)"
+        ]
+      },
+      "green-text": {
+        "role": "secondary",
+        "displayName": "Green Text",
+        "tonalRamp": [
+          "oklch(15% 0.1295 149.62)",
+          "oklch(26% 0.1295 149.62)",
+          "oklch(38% 0.1295 149.62)",
+          "oklch(49% 0.1295 149.62)",
+          "oklch(61% 0.1295 149.62)",
+          "oklch(72% 0.1295 149.62)",
+          "oklch(84% 0.1295 149.62)",
+          "oklch(95% 0.1295 149.62)"
+        ]
+      },
+      "green-wash": {
+        "role": "secondary",
+        "displayName": "Green Wash",
+        "tonalRamp": [
+          "oklch(15% 0.0434 156.74)",
+          "oklch(26% 0.0434 156.74)",
+          "oklch(38% 0.0434 156.74)",
+          "oklch(49% 0.0434 156.74)",
+          "oklch(61% 0.0434 156.74)",
+          "oklch(72% 0.0434 156.74)",
+          "oklch(84% 0.0434 156.74)",
+          "oklch(95% 0.0434 156.74)"
+        ]
+      },
+      "yellow": {
+        "role": "secondary",
+        "displayName": "Yellow",
+        "tonalRamp": [
+          "oklch(15% 0.1592 94.95)",
+          "oklch(26% 0.1592 94.95)",
+          "oklch(38% 0.1592 94.95)",
+          "oklch(49% 0.1592 94.95)",
+          "oklch(61% 0.1592 94.95)",
+          "oklch(72% 0.1592 94.95)",
+          "oklch(84% 0.1592 94.95)",
+          "oklch(95% 0.1592 94.95)"
+        ]
+      },
+      "yellow-wash": {
+        "role": "secondary",
+        "displayName": "Yellow Wash",
+        "tonalRamp": [
+          "oklch(15% 0.0345 96.29)",
+          "oklch(26% 0.0345 96.29)",
+          "oklch(38% 0.0345 96.29)",
+          "oklch(49% 0.0345 96.29)",
+          "oklch(61% 0.0345 96.29)",
+          "oklch(72% 0.0345 96.29)",
+          "oklch(84% 0.0345 96.29)",
+          "oklch(95% 0.0345 96.29)"
+        ]
+      },
+      "orange": {
+        "role": "secondary",
+        "displayName": "Orange",
+        "tonalRamp": [
+          "oklch(15% 0.1523 45.56)",
+          "oklch(26% 0.1523 45.56)",
+          "oklch(38% 0.1523 45.56)",
+          "oklch(49% 0.1523 45.56)",
+          "oklch(61% 0.1523 45.56)",
+          "oklch(72% 0.1523 45.56)",
+          "oklch(84% 0.1523 45.56)",
+          "oklch(95% 0.1523 45.56)"
+        ]
+      },
+      "canvas": {
+        "role": "neutral",
+        "displayName": "Canvas",
+        "tonalRamp": [
+          "oklch(15% 0.0050 228.82)",
+          "oklch(26% 0.0050 228.82)",
+          "oklch(38% 0.0050 228.82)",
+          "oklch(49% 0.0050 228.82)",
+          "oklch(61% 0.0050 228.82)",
+          "oklch(72% 0.0050 228.82)",
+          "oklch(84% 0.0050 228.82)",
+          "oklch(95% 0.0050 228.82)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0000 89.88)",
+          "oklch(26% 0.0000 89.88)",
+          "oklch(38% 0.0000 89.88)",
+          "oklch(49% 0.0000 89.88)",
+          "oklch(61% 0.0000 89.88)",
+          "oklch(72% 0.0000 89.88)",
+          "oklch(84% 0.0000 89.88)",
+          "oklch(95% 0.0000 89.88)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0000 89.88)",
+          "oklch(26% 0.0000 89.88)",
+          "oklch(38% 0.0000 89.88)",
+          "oklch(49% 0.0000 89.88)",
+          "oklch(61% 0.0000 89.88)",
+          "oklch(72% 0.0000 89.88)",
+          "oklch(84% 0.0000 89.88)",
+          "oklch(95% 0.0000 89.88)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted",
+        "tonalRamp": [
+          "oklch(15% 0.0000 89.88)",
+          "oklch(26% 0.0000 89.88)",
+          "oklch(38% 0.0000 89.88)",
+          "oklch(49% 0.0000 89.88)",
+          "oklch(61% 0.0000 89.88)",
+          "oklch(72% 0.0000 89.88)",
+          "oklch(84% 0.0000 89.88)",
+          "oklch(95% 0.0000 89.88)"
+        ]
+      },
+      "border": {
+        "role": "neutral",
+        "displayName": "Border",
+        "tonalRamp": [
+          "oklch(15% 0.0000 89.88)",
+          "oklch(26% 0.0000 89.88)",
+          "oklch(38% 0.0000 89.88)",
+          "oklch(49% 0.0000 89.88)",
+          "oklch(61% 0.0000 89.88)",
+          "oklch(72% 0.0000 89.88)",
+          "oklch(84% 0.0000 89.88)",
+          "oklch(95% 0.0000 89.88)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "title": {
+        "displayName": "Detail Title",
+        "purpose": "Selected lock heading."
+      },
+      "body": {
+        "displayName": "Supporting Copy",
+        "purpose": "Guidance and metadata."
+      },
+      "label": {
+        "displayName": "State Label",
+        "purpose": "Compact lock state labels."
+      },
+      "button": {
+        "displayName": "Action Label",
+        "purpose": "Primary and outline controls."
+      }
+    },
+    "shadows": [
+      {
+        "name": "mobile-dock",
+        "value": "0 8px 24px #0033592e",
+        "purpose": "Elevates the floating mobile filter group."
+      },
+      {
+        "name": "action-disc",
+        "value": "0 6px 16px #1217262e",
+        "purpose": "Circular detail action inner disc."
+      },
+      {
+        "name": "toast",
+        "value": "0 6px 22px #11283220",
+        "purpose": "Transient feedback."
+      }
+    ],
+    "motion": [
+      {
+        "name": "tile-transition",
+        "value": "150ms",
+        "purpose": "Tile border and background changes."
+      },
+      {
+        "name": "sheet-enter",
+        "value": "220ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Sheet entrance; minimized with reduced motion."
+      },
+      {
+        "name": "toast-transition",
+        "value": "200ms",
+        "purpose": "Toast opacity and translation."
+      },
+      {
+        "name": "filter-selection",
+        "duration": "360ms",
+        "easing": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "purpose": "Shared solid cyan selection slides and resizes between filters; no glass. Labels and segment widths transition over 280ms. Spatial motion is minimized for reduced-motion preferences."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "compact-max",
+        "value": "360px"
+      },
+      {
+        "name": "desktop-min",
+        "value": "768px"
+      },
+      {
+        "name": "three-column-min",
+        "value": "1180px"
+      },
+      {
+        "name": "eight-card-min",
+        "value": "1380px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "description": "Supported action or secondary refresh control.",
+      "html": "<button class=\"ds-button-primary\">Odomknúť</button>",
+      "css": ".ds-button-primary{font:500 14px/18px Inter,sans-serif;min-height:44px;padding:8px 14px;border:1px solid transparent;border-radius:8px;background:var(--primary,#00b2ee);color:#063145;cursor:pointer}.ds-button-primary:hover{filter:brightness(.96)}.ds-button-primary:focus-visible{outline:2px solid var(--blue-text,#007399);outline-offset:3px}",
+      "refersTo": "button-primary"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "description": "Supported action or secondary refresh control.",
+      "html": "<button class=\"ds-button-outline\">Obnoviť</button>",
+      "css": ".ds-button-outline{font:500 14px/18px Inter,sans-serif;min-height:44px;padding:8px 14px;border:1px solid var(--primary-light,#9ddbf4);border-radius:8px;background:white;color:#063145;cursor:pointer}.ds-button-outline:hover{filter:brightness(.96)}.ds-button-outline:focus-visible{outline:2px solid var(--blue-text,#007399);outline-offset:3px}",
+      "refersTo": "button-outline"
+    },
+    {
+      "name": "Active Filter",
+      "kind": "chip",
+      "description": "All is the initial selected filter; desktop rows use 10px corners.",
+      "html": "<button class=\"ds-filter\" aria-pressed=\"true\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><rect x=\"3\" y=\"3\" width=\"7\" height=\"7\" rx=\"1\"/><rect x=\"14\" y=\"3\" width=\"7\" height=\"7\" rx=\"1\"/><rect x=\"3\" y=\"14\" width=\"7\" height=\"7\" rx=\"1\"/><rect x=\"14\" y=\"14\" width=\"7\" height=\"7\" rx=\"1\"/></svg>Všetky <strong>56</strong></button>",
+      "css": ".ds-filter{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;padding:8px 12px;border:0;border-radius:999px;background:var(--primary,#00b2ee);color:#063145;font:600 12px/18px Inter,sans-serif;cursor:pointer}.ds-filter strong{font-weight:700;font-variant-numeric:tabular-nums}.ds-filter:hover{filter:brightness(.96)}.ds-filter:focus-visible{outline:2px solid var(--blue-text,#007399);outline-offset:3px}",
+      "refersTo": "filter-active"
+    },
+    {
+      "name": "Selected Unlocked Tile",
+      "kind": "card",
+      "description": "Selection retains the green state fill and adds a cyan outline.",
+      "html": "<button class=\"ds-tile\" aria-pressed=\"true\" aria-label=\"Zámok 07, odomknutý\"><span class=\"ds-top\">07 <i></i></span><span class=\"ds-circle\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" aria-hidden=\"true\"><rect x=\"3\" y=\"11\" width=\"18\" height=\"11\" rx=\"2\"/><path d=\"M7 11V7a5 5 0 0 1 9.9-1M12 15v3\"/></svg></span><span class=\"ds-label\">Odomknutý</span></button>",
+      "css": ".ds-tile{display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:6px;width:86px;min-height:107px;padding:10px 10px 12px;border:1px solid #64c782;border-radius:var(--radius,14px);background:var(--green-wash,#dcfce7);outline:2px solid var(--primary,#00b2ee);outline-offset:-1px;font-family:Inter,sans-serif;cursor:pointer;transition:background-color .15s}.ds-tile:hover{background:#ccf6da}.ds-top{align-self:stretch;display:flex;align-items:center;justify-content:space-between;font-size:15px;line-height:18px;font-weight:600}.ds-top i{width:8px;height:8px;border-radius:50%;background:var(--green,#16a34a)}.ds-circle{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:white;color:var(--green,#16a34a)}.ds-label{font-size:11px;line-height:14px;color:var(--green-text,#137536)}.ds-tile:focus-visible{outline:2px solid var(--blue-text,#007399);outline-offset:3px}",
+      "refersTo": "lock-tile"
+    },
+    {
+      "name": "Mobile Filter Dock",
+      "kind": "nav",
+      "description": "Floating state filter group; illustrative counts, not runtime data. Inactive items expose labels to assistive technology.",
+      "html": "<div class=\"ds-dock\" role=\"group\" aria-label=\"Filtre zámkov\"><button aria-pressed=\"true\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><rect x=\"3\" y=\"3\" width=\"7\" height=\"7\" rx=\"1\"/><rect x=\"14\" y=\"3\" width=\"7\" height=\"7\" rx=\"1\"/><rect x=\"3\" y=\"14\" width=\"7\" height=\"7\" rx=\"1\"/><rect x=\"14\" y=\"14\" width=\"7\" height=\"7\" rx=\"1\"/></svg> Všetky <b>56</b></button><button aria-label=\"Zamknuté: 36\">36</button><button aria-label=\"Odomknuté: 4\">4</button><button aria-label=\"Offline: 16\">16</button></div>",
+      "css": ".ds-dock{display:flex;gap:4px;width:330px;max-width:100%;padding:3px;border:1px solid var(--border,#c9c9c9);border-radius:999px;background:white;box-shadow:0 8px 24px #0033592e}.ds-dock button{display:flex;align-items:center;justify-content:center;gap:6px;flex:1;min-height:44px;border:0;border-radius:999px;background:transparent;font:13px/18px Inter,sans-serif;cursor:pointer}.ds-dock button[aria-pressed=true]{flex:1.9;background:var(--primary,#00b2ee);color:#063145;font-size:12px}.ds-dock button:hover{filter:brightness(.96)}.ds-dock button:focus-visible{outline:2px solid var(--blue-text,#007399);outline-offset:3px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Boxyland control panel",
+    "overview": "The supplied desktop and mobile designs define a compact operating dashboard: white surfaces on an ice-blue canvas, cyan controls, circular lock imagery and explicit localized states. Keep the real `public/boxyland-logo.png` and locally bundled Inter fonts. This records the implementation in `src/App.tsx`, `src/styles.css` and `src/components/LockDetail.tsx`; `PRODUCT.md` owns the device contract.",
+    "keyCharacteristics": [
+      "State filters, dense lock grid and selected-lock details.",
+      "Cyan identity with green, yellow and neutral state treatments.",
+      "Desktop detail rail and mobile bottom sheet.",
+      "Flat ordinary surfaces, with elevation on the mobile dock and circular action."
+    ],
+    "rules": [
+      {
+        "name": "State Redundancy",
+        "body": "Pair state color with a localized label and icon or border treatment; selection preserves the state fill.",
+        "section": "colors"
+      },
+      {
+        "name": "Shared Detail",
+        "body": "Use the same content in the desktop detail rail and mobile bottom sheet.",
+        "section": "layout"
+      }
+    ],
+    "dos": [
+      "Do follow the supplied Boxyland composition and preserve local brand/font assets for offline use.",
+      "Do retain all reported device addresses, localized labels and explicit state feedback.",
+      "Do confirm command outcomes from device polling and explain unsupported locking."
+    ],
+    "donts": [
+      "Don't restore statistics/device panels, bulk actions, demo modes or simulated production states.",
+      "Don't use green, yellow or offline styling as unrelated decoration.",
+      "Don't imply Wi-Fi setup, automatic USB networking or a locking API that the controller does not provide."
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+node_modules/
+dist/
+**/build/
+**/.gradle/
+*.tsbuildinfo
+package-lock.json
+.impeccable/
+artifacts/
+
+# Capacitor-generated assets and plugin projects
+android/app/src/main/assets/
+android/capacitor-cordova-android-plugins/
+ios/App/App/public/
+ios/App/App/capacitor.config.json
+ios/capacitor-cordova-ios-plugins/

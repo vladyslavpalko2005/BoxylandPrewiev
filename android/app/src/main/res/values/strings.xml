@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Boxyland Lock</string>
+    <string name="title_activity_main">Boxyland Lock</string>
+    <string name="package_name">sk.boxyland.locks</string>
+    <string name="custom_url_scheme">sk.boxyland.locks</string>
+</resources>

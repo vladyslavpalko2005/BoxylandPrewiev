@@ -1,0 +1,15 @@
+node_modules/
+dist/
+*.tsbuildinfo
+.DS_Store
+.impeccable/review/
+.env
+.env.local
+.env.*.local
+
+# Mobile signing credentials and exported builds
+*.jks
+*.keystore
+*.p12
+*.mobileprovision
+artifacts/
