@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import {
-  Cable,
+  Wifi,
   CircleAlert,
   LoaderCircle,
   LockKeyhole,
@@ -46,7 +46,7 @@ function ConnectionBadge({
   const { t } = useI18n()
   const Icon =
     connection === 'connected'
-      ? Cable
+      ? Wifi
       : connection === 'searching'
         ? LoaderCircle
         : Unplug
@@ -60,6 +60,7 @@ function ConnectionBadge({
     >
       <Icon
         size={14}
+        strokeWidth={connection === 'connected' ? 3 : 2}
         className={connection === 'searching' ? 'spin' : ''}
         aria-hidden="true"
       />
@@ -257,13 +258,34 @@ export default function App() {
               </div>
             )}
             <div className="workspace">
-              <aside className="filter-panel" aria-label={t('filterLocks')}>
-                <FilterSwitch
-                  value={filter}
-                  counts={counts}
-                  onChange={setFilter}
-                />
-              </aside>
+              <div className="workspace-sidebar">
+                <aside className="filter-panel" aria-label={t('filterLocks')}>
+                  <FilterSwitch
+                    value={filter}
+                    counts={counts}
+                    onChange={setFilter}
+                  />
+                </aside>
+                {!mobile && (
+                  <aside className="detail-panel" aria-label={t('detail')}>
+                    {activeLock ? (
+                      <LockDetail
+                        lock={activeLock}
+                        connection={connection}
+                        onClose={closeDetail}
+                        onOperate={operateOne}
+                        onRetry={refresh}
+                      />
+                    ) : (
+                      <div className="detail-placeholder">
+                        <LockKeyhole size={32} />
+                        <h2>{t('chooseLock')}</h2>
+                        <p>{t('chooseHint')}</p>
+                      </div>
+                    )}
+                  </aside>
+                )}
+              </div>
 
               <section className="locks-panel" aria-labelledby="locks-heading">
                 <div className="panel-toolbar">
@@ -316,26 +338,6 @@ export default function App() {
                   </div>
                 )}
               </section>
-
-              {!mobile && (
-                <aside className="detail-panel" aria-label={t('detail')}>
-                  {activeLock ? (
-                    <LockDetail
-                      lock={activeLock}
-                      connection={connection}
-                      onClose={closeDetail}
-                      onOperate={operateOne}
-                      onRetry={refresh}
-                    />
-                  ) : (
-                    <div className="detail-placeholder">
-                      <LockKeyhole size={32} />
-                      <h2>{t('chooseLock')}</h2>
-                      <p>{t('chooseHint')}</p>
-                    </div>
-                  )}
-                </aside>
-              )}
             </div>
           </>
         )}

@@ -51,7 +51,11 @@ export function LockDetail({
           title={alreadyUnlocked ? t('openOnly') : undefined}
           disabled={disabled}
           onClick={() => onOperate(lock.id, target)}
-          aria-label={t('actionLabel', { action, number: number(lock.id) })}
+          aria-label={
+            alreadyUnlocked
+              ? t('alreadyUnlocked')
+              : t('actionLabel', { action, number: number(lock.id) })
+          }
         >
           <span className="big-lock-inner">
             {unavailable || pending ? (
@@ -83,7 +87,7 @@ export function LockDetail({
           </p>
         )}
       </div>
-      {!unavailable && (
+      {!unavailable && !alreadyUnlocked && (
         <button
           className={`button primary full detail-action${alreadyUnlocked ? ' manual-lock-action' : ''}`}
           title={alreadyUnlocked ? t('openOnly') : undefined}
@@ -102,7 +106,7 @@ export function LockDetail({
             : action}
         </button>
       )}
-      {alreadyUnlocked && <p className="unsupported-action">{t('openOnly')}</p>}
+      {alreadyUnlocked && <p className="manual-close-hint">{t('openOnly')}</p>}
       {lock.commandError && (
         <p className="command-error" role="alert">
           {t(lock.commandError)}

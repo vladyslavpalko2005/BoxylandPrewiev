@@ -207,6 +207,9 @@ svg {
 .workspace {
   display: block;
 }
+.workspace-sidebar {
+  display: contents;
+}
 .locks-panel {
   min-width: 0;
 }
@@ -561,10 +564,10 @@ svg {
   background: var(--green);
 }
 .big-lock.pending {
-  background: var(--yellow-wash);
+  background: #fcfadc;
 }
 .big-lock.pending .big-lock-inner {
-  background: #806b1e;
+  background: var(--yellow);
 }
 .big-lock.offline {
   width: 112px;
@@ -600,11 +603,11 @@ svg {
   border-color: transparent;
   color: #ffffff;
 }
-.unsupported-action {
-  color: var(--muted);
-  font-size: 11px;
-  line-height: 16px;
-  margin-top: -8px;
+.manual-close-hint {
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  white-space: pre-line;
 }
 .metadata {
   margin: 0;
@@ -867,6 +870,20 @@ dialog::backdrop {
     gap: 20px;
     align-items: start;
   }
+  .workspace-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+    grid-column: 2;
+    grid-row: 1;
+    position: sticky;
+    top: 20px;
+  }
+  .locks-panel {
+    grid-column: 1;
+    grid-row: 1;
+  }
   .filter-panel {
     position: static;
     inset: auto;
@@ -875,7 +892,9 @@ dialog::backdrop {
     padding: 12px;
     border-radius: 14px;
     box-shadow: none;
-    grid-column: 1 / -1;
+  }
+  .filter-row {
+    flex-direction: column;
   }
   .filter {
     flex: 1;
@@ -883,6 +902,7 @@ dialog::backdrop {
     padding: 10px 12px;
     border-radius: 10px;
     font-size: 14px;
+    justify-content: flex-start;
   }
   .filter.active {
     flex: 1;
@@ -927,8 +947,6 @@ dialog::backdrop {
   }
   .detail-panel {
     display: block;
-    position: sticky;
-    top: 20px;
   }
   .locks-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -960,15 +978,7 @@ dialog::backdrop {
 }
 @media (min-width: 1180px) {
   .workspace {
-    grid-template-columns: 232px minmax(0, 1fr) 360px;
-  }
-  .filter-panel {
-    grid-column: auto;
-    position: sticky;
-    top: 20px;
-  }
-  .filter-row {
-    flex-direction: column;
+    grid-template-columns: minmax(0, 1fr) 360px;
   }
   .filter {
     justify-content: flex-start;
