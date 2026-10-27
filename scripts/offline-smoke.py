@@ -81,7 +81,7 @@ def verify_surface(browser, name, width, height, mobile):
     expect(page.locator('.lock-tile')).to_have_count(48)
     expect(page.locator('.connection-badge.connected')).to_be_visible()
     assert not page.evaluate('window.isSecureContext'), 'Test must exercise plain LAN HTTP'
-    assert page.evaluate('document.fonts.check("400 16px Inter", "Zámky Ľščťžýáíé")')
+    assert page.evaluate('document.fonts.check("400 16px Instrument Sans", "Zámky Ľščťžýáíé")')
     assert page.locator('.brand img').evaluate('(img) => img.complete && img.naturalWidth > 0')
     assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), name
     page.screenshot(path=str(SHOTS / f'{name}.png'), full_page=True)
@@ -89,21 +89,24 @@ def verify_surface(browser, name, width, height, mobile):
     if width >= 1180:
         sidebar = page.locator('.filter-panel').bounding_box()
         grid = page.locator('.locks-panel').bounding_box()
-        assert sidebar['x'] + sidebar['width'] <= grid['x'], 'Sidebar overlaps the grid'
+        assert grid['x'] + grid['width'] <= sidebar['x'], 'Sidebar overlaps the grid'
     if width < 768:
         dock = page.locator('.filter-panel').bounding_box()
         page.locator('.lock-tile').last.scroll_into_view_if_needed()
         last = page.locator('.lock-tile').last.bounding_box()
         assert last['y'] + last['height'] <= dock['y'], 'Dock must not prevent reaching the last port'
         assert page.locator('.filter-panel').bounding_box()['y'] == dock['y']
-        page.evaluate('scrollTo(0, 0)')
+        page.locator('.dashboard').evaluate('(e) => e.scrollTo(0, 0)')
     page.locator('.filter.locked').click()
     expect(page.locator('.lock-tile')).to_have_count(37)
     page.locator('.filter.unlocked').click()
+    expect(page.locator('.filter-row button')).to_have_count(4)
     expect(page.locator('.lock-tile')).to_have_count(3)
+    expect(page.locator('.lock-tile.unlocked')).to_have_count(3)
     page.locator('.filter.offline').click()
     expect(page.locator('.lock-tile')).to_have_count(8)
-    page.locator('.lock-tile').first.click()
+    expect(page.locator('.lock-tile.offline')).to_have_count(8)
+    page.locator('.lock-tile.offline').first.click()
     expect(page.locator('.metadata div')).to_have_count(2)
     if width < 768:
         page.locator('dialog .detail-heading .icon-button').click()
@@ -131,8 +134,8 @@ def verify_surface(browser, name, width, height, mobile):
     control['unavailable'] = True
     refresh.click()
     expect(page.locator('.connection-badge.disconnected')).to_be_visible()
-    expect(page.locator('.lock-tile').first).to_be_disabled()
-    expect(page.locator('.lock-tile')).to_have_count(48)
+    expect(page.get_by_role('heading', name='Pripojte sa k ovládaču')).to_be_visible()
+    expect(page.locator('.lock-tile')).to_have_count(0)
     control['unavailable'] = False
     expect(page.locator('.connection-badge.connected')).to_be_visible(timeout=6000)
     expect(page.locator('.lock-tile').first).to_be_enabled()

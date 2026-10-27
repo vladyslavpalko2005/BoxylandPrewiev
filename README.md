@@ -1,6 +1,8 @@
-# Boxyland Lock
+# BOXYLOCK DEMO
 
-React + TypeScript + Vite frontend for the local Raspberry Pi lock controller. Includes Slovak and English, responsive desktop/mobile layouts. Branding follows the supplied mockups and the adjacent `boxyland-admin-client`; that project is not modified.
+BOXYLOCK DEMO zobrazuje stav všetkých 48 zámkov v reálnom čase. Zámok odomknete jedným ťuknutím priamo v telefóne bez inštalácie aplikácie a bez registrácie.
+
+React + TypeScript + Vite frontend for the local Raspberry Pi lock controller. Includes Slovak and English, responsive desktop/mobile layouts. Branding follows the supplied BOXYLOCK 2026 Figma design (page `178:96`); the adjacent `boxyland-admin-client` is not modified.
 
 ## Run locally
 
@@ -24,15 +26,17 @@ For a phone on the same network: `npm run dev -- --host 0.0.0.0`, then use the M
 
 - `GET /api/internal/states` is polled about every two seconds, with no overlapping polls.
 - Actual response: an array of `{ address, active, locked, opened }`, with numeric addresses and a boolean `active` flag. Active ports require boolean `locked` and `opened`; inactive ports also permit `null` sensor values. Nullable `last_opened` / `last_closed` metadata does not invalidate a snapshot. The verified device returned **56 addresses**; the UI follows the response rather than truncating to the 48-port mockup.
-- `active=false` is unavailable; null sensor values remain unknown rather than becoming false; otherwise `locked` determines the lock label. `opened` is preserved independently, including `locked=true, opened=true`; the compact detail panel omits raw flags.
+- `active=false` is shown as the combined “Odomknutý/Nepripojený” state; null sensor values remain unknown rather than becoming false; otherwise `locked` determines the lock label. `opened` is preserved independently, including `locked=true, opened=true`; the compact detail panel omits raw flags.
 - `POST /api/internal/{address}/open` is sent only after the user's explicit click for a currently locked, active port. OPTIONS on the device advertised GET and POST. No body is sent. There is no locking or bulk-lock API, so bulk controls are absent and the lock action is disabled.
 - Opening remains pending until a later `/states` snapshot reports `active=true, locked=false`. A successful HTTP response alone never changes the displayed sensor state. Lack of confirmation after ten seconds is shown as a command error. Failed or timed-out commands are never automatically retried.
-- Snapshots are validated atomically: malformed JSON, invalid flag types (including null sensors on active ports), duplicate or invalid addresses and empty responses are rejected. On failure, the latest valid snapshot stays visible, controls are disabled, and read-only reconnection continues automatically. There is no automatic fallback to synthetic data.
+- Snapshots are validated atomically: malformed JSON, invalid flag types (including null sensors on active ports), duplicate or invalid addresses and empty responses are rejected. On transport/HTTP failure or when the browser reports no network, the connection screen hides the inventory and any open detail sheet; the last valid snapshot is retained internally. Invalid snapshots keep the last inventory visible with controls disabled. Read-only reconnection continues automatically. There is no automatic fallback to synthetic data.
 - Live history contains only lock-state changes observed during this browser session; no hardware history endpoint is available. Initial state does not invent an unlock time or old events.
 
 ## Interface
 
-The supplied updated design uses All, Locked, Unlocked and Not connected filters with real counts. All is selected initially. Desktop uses a sidebar, compact grid and detail rail; phones use four-column tiles, a floating bottom filter dock and detail sheet. The grid toolbar contains only its heading and count; there is no search control. A shared solid cyan selection slides between filters, with reduced-motion support. On phones the connection badge refreshes states. The unlocked lock action remains disabled with an explanation because the API exposes opening only. The Wi-Fi provisioning banner from the mockup is not shown without a supported provisioning API.
+The BOXYLOCK 2026 design uses Instrument Sans, petrol/stormy teal accents, an icy blue background and the supplied BOXYLOCK wordmark. SVG icons and font subsets are bundled locally. The combined unlocked/not connected tile follows the supplied diagonal design: pale teal with an unlocked icon above-left, neutral grey with an unplugged icon below-right, solid teal and dashed grey border halves. Its full state remains available in the accessible label, tooltip and detail view. Backend state interpretation and memory of previous locked states belong to the backend; the frontend does not infer unlocking from a click. USB/cable connection screens and cable fallback links are intentionally excluded; the website uses its existing network API.
+
+The interface has four independent filters: All, Locked, Unlocked and Unlocked/Not connected. Each state has its own count and matching inventory; confirmed unlocked ports are separate from the combined state. All is selected initially. Desktop uses a sidebar, compact grid and detail rail; phones use a viewport-height shell with a fixed header, a scrollable four-column inventory, a floating filter capsule over the grid and a detail sheet. The capsule wrapper is transparent; there is no full-width footer backdrop. The inventory adds scroll clearance using the controls’ measured height (including safe area), so the last row remains reachable without guessing a fixed reserve. At narrow widths the four filter buttons use a compact equal-width layout, with the active label below its icon/count. The grid toolbar contains only its heading and count; there is no search control. A shared solid petrol teal selection slides between filters, with reduced-motion support. On phones the connection badge refreshes states. The unlocked lock action remains disabled with an explanation because the API exposes opening only. The Wi-Fi provisioning banner from the mockup is not shown without a supported provisioning API.
 
 ## Language
 
@@ -48,6 +52,8 @@ With the dev server on port 5173, Python `playwright` and Google Chrome installe
 python3 scripts/live-smoke.py
 ```
 
+For the additional browser checks, start the test server with `npm run dev -- --port 5175`, then run `LIVE_TEST_SERVER=http://127.0.0.1:5175 python3 scripts/live-smoke.py`. `LIVE_TEST_SERVER=http://127.0.0.1:5175 python3 scripts/responsive-smoke.py` checks all four filters at 320–1440px, short landscape viewports, resize and last-row visibility in Chromium and WebKit. `python3 scripts/wifi-help-smoke.py` checks the manual guide and focus/visibility recovery with polling frozen. `python3 scripts/connection-smoke.py` additionally checks the disconnected screen, offline/online events, captive HTML responses, retry and recovery.
+
 The browser checks intercept device requests and verify the 56-address contract, independent flags, POST commands, sensor confirmation, failures/timeouts, validation, stale snapshots, recovery, desktop/mobile layouts and keyboard operation. **Tests do not open physical locks.** Screenshots are saved under `.impeccable/review/`.
 
 ## Deploying on Raspberry
@@ -60,11 +66,13 @@ location /api/internal/ {
 }
 ```
 
+When the controller is unreachable, the website shows the “Pripojte sa k ovládaču” screen with a “Pripojiť” retry button. The retry button has its own footer row at every width. Loading and connection screens use a viewport-height flex layout with ordinary 20px content padding, without header-height subtraction or page scrollbars. Short screens use a compact horizontal Wi-Fi/message layout. Browser offline/online events update this state and trigger recovery. Controller availability is verified through the same-origin API, not a hard-coded IP allowlist: browsers cannot read the DHCP/captive portal assigned client IP reliably. A wrong origin, failed request or captive HTML response on initial load cannot enter the lock dashboard. Tapping “Pripojiť” shows a three-step manual Wi-Fi guide and checks the API. The guide asks the user to open device Wi-Fi settings, join the controller’s network, and return to this page; it does not invent an SSID or open system settings. The action then becomes “Skúsiť znova”. While disconnected, returning via window focus or document visibility triggers a fresh read-only API check; successful recovery dismisses the guide. The button does not change the phone’s Wi-Fi. The page must already be loaded for the offline screen to appear; serving the site on a completely disconnected first visit still requires a reachable local server.
+
 The website does not configure USB networking or start the hardware API process.
 
 ## Offline Raspberry Pi frontend
 
-The production frontend is self-contained: React, CSS, icons, logo and Inter WOFF2 font subsets are served from `dist/`. It makes no Internet/CDN requests, uses no cookies, and continues working when localStorage/sessionStorage are unavailable. The Raspberry's Wi-Fi must remain connected; “offline” means no Internet, not loss of the local server.
+The production frontend is self-contained: React, CSS, icons, logo and Instrument Sans WOFF2 font subsets are served from `dist/`. It makes no Internet/CDN requests, uses no cookies, and continues working when localStorage/sessionStorage are unavailable. The Raspberry's Wi-Fi must remain connected; “offline” means no Internet, not loss of the local server.
 
 Open the local HTTP origin, for example `http://192.168.50.1`. API requests automatically use that same origin: `/api/internal/states` and `/api/internal/{address}/open`. The previous Cloudflare-specific `VITE_LOCKER_WEB_API_URL` setting has been removed. Native Capacitor apps retain `VITE_LOCKER_API_URL` unchanged.
 

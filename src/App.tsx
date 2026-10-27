@@ -1,13 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { Wifi, WifiOff, LayoutGrid } from './components/FigmaIcon'
 import {
-  Wifi,
   CircleAlert,
   LoaderCircle,
-  LockKeyhole,
+  Lock,
   RotateCw,
-  LayoutGrid,
-  Unplug,
-} from 'lucide-react'
+} from './components/BrandIcons'
 import { FilterSwitch, filters, type Filter } from './components/FilterSwitch'
 import { LockDetail } from './components/LockDetail'
 import { LockVisual } from './components/LockIcon'
@@ -49,7 +47,7 @@ function ConnectionBadge({
       ? Wifi
       : connection === 'searching'
         ? LoaderCircle
-        : Unplug
+        : WifiOff
   return (
     <button
       className={`connection-badge ${connection}`}
@@ -99,6 +97,7 @@ function LockTile({
         status: t(lock.status).toLowerCase(),
       })}
       aria-pressed={selected}
+      title={lock.status === 'offline' ? t('offline') : undefined}
     >
       <span className="tile-top">
         <span>{number(lock.id)}</span>
@@ -106,7 +105,7 @@ function LockTile({
           <i className={`status-dot ${lock.status}`} />
         )}
       </span>
-      <LockVisual lock={lock} />
+      <LockVisual lock={lock} tile />
       <span className="tile-label">
         {lock.status === 'pending'
           ? t(lock.target === 'locked' ? 'locking' : 'unlocking')
@@ -130,9 +129,12 @@ export default function App() {
     error,
   } = useLiveController()
   const mobile = useMobile()
+  const shellRef = useRef<HTMLDivElement>(null)
+  const controlsRef = useRef<HTMLDivElement>(null)
   const [filter, setFilter] = useState<Filter>('all')
   const [selected, setSelected] = useState<number | null>(7)
   const [sheetOpen, setSheetOpen] = useState(false)
+  const [showWifiHelp, setShowWifiHelp] = useState(false)
   const activeLock = locks.find((lock) => lock.id === selected)
   const counts = {
     all: locks.length,
@@ -144,6 +146,37 @@ export default function App() {
     (lock) => filter === 'all' || lock.status === filter,
   )
   const connected = connection === 'connected'
+  const needsConnection =
+    connection === 'disconnected' &&
+    (locks.length === 0 ||
+      error?.code === 'apiUnavailable' ||
+      error?.code === 'apiHttpError')
+  const showConnection = locks.length === 0 || needsConnection
+  const wifiHelpVisible = needsConnection && showWifiHelp
+  useEffect(() => {
+    if (connected) setShowWifiHelp(false)
+  }, [connected])
+  useLayoutEffect(() => {
+    const shell = shellRef.current
+    const controls = controlsRef.current
+    if (!shell || !controls || !mobile || showConnection) return
+    const measure = () => {
+      shell.style.setProperty(
+        '--mobile-controls-height',
+        `${controls.getBoundingClientRect().height}px`,
+      )
+    }
+    measure()
+    const observer =
+      typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(measure)
+    observer?.observe(controls)
+    window.addEventListener('resize', measure)
+    return () => {
+      observer?.disconnect()
+      window.removeEventListener('resize', measure)
+      shell.style.removeProperty('--mobile-controls-height')
+    }
+  }, [mobile, showConnection])
   const heading =
     filter === 'all'
       ? t('locks')
@@ -155,19 +188,45 @@ export default function App() {
   const operateOne = (id: number, target: 'locked' | 'unlocked') =>
     operate([id], target)
 
+  const connectAction = (
+    <button
+      className="connect-button"
+      disabled={refreshing}
+      onClick={() => {
+        setShowWifiHelp(true)
+        refresh()
+      }}
+    >
+      {refreshing ? (
+        <LoaderCircle size={18} className="spin" />
+      ) : (
+        <img src={`${import.meta.env.BASE_URL}brand/ad42d.svg`} alt="" />
+      )}
+      <span>
+        {t(
+          refreshing
+            ? 'searching'
+            : wifiHelpVisible
+              ? 'retry'
+              : 'connectAction',
+        )}
+      </span>
+    </button>
+  )
+
   return (
-    <div className="app-shell">
+    <div
+      ref={shellRef}
+      className={`app-shell${showConnection ? ' app-shell-connecting' : ''}`}
+    >
       <header className="app-header">
         <a href="./" className="brand" aria-label={t('home')}>
-          <img
-            src={`${import.meta.env.BASE_URL}boxyland-logo.png`}
-            width="90"
-            height="35"
-            alt="Boxyland"
-          />
-          <span>
-            <strong>Boxyland Lock</strong>
-            <small>{t('subtitle')}</small>
+          <span className="brand-wordmark" aria-label="BOXYLOCK">
+            BOXYL
+            <span className="logo-gap">
+              O<img src={`${import.meta.env.BASE_URL}brand/d2457.svg`} alt="" />
+            </span>
+            CK
           </span>
         </a>
         <div className="header-controls">
@@ -192,41 +251,64 @@ export default function App() {
       </header>
 
       <main
-        className={`dashboard${locks.length === 0 ? ' dashboard-connecting' : ''}`}
+        className={`dashboard${showConnection ? ' dashboard-connecting' : ''}${needsConnection ? ' dashboard-connect-prompt' : ''}`}
       >
-        {locks.length === 0 ? (
+        {showConnection ? (
           <section
-            className="connection-state"
+            className={`connection-state${wifiHelpVisible ? ' wifi-help-state' : ''}`}
             aria-labelledby="connection-heading"
             aria-busy={connection === 'searching' || refreshing}
           >
-            <div className={`connection-state-icon ${error ? 'offline' : ''}`}>
-              {error ? (
-                <Unplug size={30} strokeWidth={1.6} />
-              ) : (
-                <LoaderCircle size={30} strokeWidth={1.6} className="spin" />
-              )}
-            </div>
-            <h1 id="connection-heading">
-              {t(error ? 'statesUnavailable' : 'loadingStates')}
-            </h1>
-            <p role={error ? 'alert' : undefined}>
-              {error
-                ? t(error.code, { status: error.status ?? '—' })
-                : t('connectingHint')}
-            </p>
-            <button
-              className="button primary"
-              disabled={refreshing || connection === 'searching'}
-              onClick={refresh}
-            >
-              <RotateCw size={18} className={refreshing ? 'spin' : ''} />
-              {t(
-                refreshing || connection === 'searching'
-                  ? 'reconnecting'
-                  : 'reconnect',
-              )}
-            </button>
+            {wifiHelpVisible ? (
+              <div className="wifi-help" role="status" aria-live="polite">
+                <h1 id="connection-heading">{t('wifiHelpTitle')}</h1>
+                <ol className="wifi-help-steps">
+                  <li>{t('wifiHelpSettings')}</li>
+                  <li>{t('wifiHelpNetwork')}</li>
+                  <li>{t('wifiHelpReturn')}</li>
+                </ol>
+                <p>{t('wifiHelpAutomatic')}</p>
+              </div>
+            ) : (
+              <>
+                <div
+                  className={`connection-state-icon ${needsConnection ? 'offline' : ''}`}
+                  aria-hidden="true"
+                >
+                  {needsConnection ? (
+                    <>
+                      <img
+                        className="connection-pulse pulse-outer"
+                        src={`${import.meta.env.BASE_URL}brand/35a67.svg`}
+                        alt=""
+                      />
+                      <img
+                        className="connection-pulse pulse-middle"
+                        src={`${import.meta.env.BASE_URL}brand/6c361.svg`}
+                        alt=""
+                      />
+                      <img
+                        className="connection-pulse pulse-inner"
+                        src={`${import.meta.env.BASE_URL}brand/538bb.svg`}
+                        alt=""
+                      />
+                      <span className="connection-wifi">
+                        <img
+                          src={`${import.meta.env.BASE_URL}brand/2d614.svg`}
+                          alt=""
+                        />
+                      </span>
+                    </>
+                  ) : (
+                    <Wifi size={34} />
+                  )}
+                </div>
+                <h1 id="connection-heading">
+                  {t(needsConnection ? 'connectTitle' : 'loadingStates')}
+                </h1>
+                <p>{t(needsConnection ? 'connectHint' : 'connectingHint')}</p>
+              </>
+            )}
           </section>
         ) : (
           <>
@@ -259,13 +341,15 @@ export default function App() {
             )}
             <div className="workspace">
               <div className="workspace-sidebar">
-                <aside className="filter-panel" aria-label={t('filterLocks')}>
-                  <FilterSwitch
-                    value={filter}
-                    counts={counts}
-                    onChange={setFilter}
-                  />
-                </aside>
+                {!mobile && (
+                  <aside className="filter-panel" aria-label={t('filterLocks')}>
+                    <FilterSwitch
+                      value={filter}
+                      counts={counts}
+                      onChange={setFilter}
+                    />
+                  </aside>
+                )}
                 {!mobile && (
                   <aside className="detail-panel" aria-label={t('detail')}>
                     {activeLock ? (
@@ -278,7 +362,7 @@ export default function App() {
                       />
                     ) : (
                       <div className="detail-placeholder">
-                        <LockKeyhole size={32} />
+                        <Lock size={32} />
                         <h2>{t('chooseLock')}</h2>
                         <p>{t('chooseHint')}</p>
                       </div>
@@ -342,6 +426,19 @@ export default function App() {
           </>
         )}
       </main>
+      {needsConnection && (
+        <div className="mobile-controls connection-footer">{connectAction}</div>
+      )}
+      {mobile && !showConnection && (
+        <div
+          ref={controlsRef}
+          className="mobile-controls mobile-controls-floating"
+        >
+          <aside className="filter-panel" aria-label={t('filterLocks')}>
+            <FilterSwitch value={filter} counts={counts} onChange={setFilter} />
+          </aside>
+        </div>
+      )}
       <div
         className={`toast ${notice ? 'visible' : ''}`}
         role="status"
@@ -351,7 +448,7 @@ export default function App() {
           ? t(notice.kind, 'id' in notice ? { number: number(notice.id) } : {})
           : ''}
       </div>
-      {mobile && sheetOpen && activeLock && (
+      {mobile && sheetOpen && activeLock && !showConnection && (
         <Modal
           className="detail-sheet"
           labelId="detail-heading"

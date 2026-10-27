@@ -16,7 +16,9 @@ export type LiveError = { code: ApiErrorCode; status?: number }
 export function useLiveController() {
   const api = useMemo(() => createLockerApi(lockerApiBaseUrl()), [])
   const [locks, setLocks] = useState<BoxLock[]>([])
-  const [connection, setConnection] = useState<Connection>('searching')
+  const [connection, setConnection] = useState<Connection>(
+    navigator.onLine === false ? 'disconnected' : 'searching',
+  )
   const [refreshing, setRefreshing] = useState(false)
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
   const [notice, setNotice] = useState<Notice | null>(null)
@@ -44,12 +46,18 @@ export function useLiveController() {
   const fetchSnapshot = useCallback(
     async (manual = false) => {
       if (fetching.current || abort.current.signal.aborted) return
+      if (navigator.onLine === false) {
+        connected.current = false
+        setConnection('disconnected')
+        setError({ code: 'apiUnavailable' })
+        return
+      }
       const signal = abort.current.signal
       fetching.current = true
       if (manual) setRefreshing(true)
       try {
         const states = await api.getStates(signal)
-        if (signal.aborted) return
+        if (signal.aborted || !navigator.onLine) return
         const previous = new Map(
           snapshot.current.map((lock) => [lock.id, lock]),
         )
@@ -146,6 +154,32 @@ export function useLiveController() {
         clearTimeout(command.timer)
       pending.current.clear()
       connected.current = false
+    }
+  }, [fetchSnapshot])
+
+  useEffect(() => {
+    const offline = () => {
+      connected.current = false
+      setConnection('disconnected')
+      setError({ code: 'apiUnavailable' })
+    }
+    const online = () => {
+      void fetchSnapshot(true)
+    }
+    const resume = () => {
+      if (!connected.current && document.visibilityState !== 'hidden') {
+        void fetchSnapshot(true)
+      }
+    }
+    window.addEventListener('focus', resume)
+    document.addEventListener('visibilitychange', resume)
+    window.addEventListener('offline', offline)
+    window.addEventListener('online', online)
+    return () => {
+      window.removeEventListener('focus', resume)
+      document.removeEventListener('visibilitychange', resume)
+      window.removeEventListener('offline', offline)
+      window.removeEventListener('online', online)
     }
   }, [fetchSnapshot])
 

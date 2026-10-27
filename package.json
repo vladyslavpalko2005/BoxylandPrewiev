@@ -1,5 +1,5 @@
 {
-  "name": "boxyland-lock",
+  "name": "boxylock-demo",
   "private": true,
   "version": "0.1.0",
   "type": "module",
@@ -20,6 +20,7 @@
     "@capacitor/app": "^8.1.2",
     "@capacitor/core": "^8.5.3",
     "@capacitor/ios": "^8.5.3",
+    "@fontsource/instrument-sans": "^5.3.0",
     "@fontsource/inter": "^5.2.8",
     "lucide-react": "^0.468.0",
     "react": "^19.2.0",

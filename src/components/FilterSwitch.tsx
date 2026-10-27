@@ -1,5 +1,7 @@
 import { useLayoutEffect, useRef } from 'react'
-import { LayoutGrid, Lock, LockOpen, Unplug } from 'lucide-react'
+import { LayoutGrid } from './FigmaIcon'
+import { Lock, LockOpen } from './BrandIcons'
+import { UnlockedOfflineIcon } from './LockIcon'
 import { useI18n } from '../lib/i18n'
 
 export type Filter = 'all' | 'locked' | 'unlocked' | 'offline'
@@ -7,7 +9,7 @@ export const filters = [
   { id: 'all', label: 'all', icon: LayoutGrid },
   { id: 'locked', label: 'lockedPlural', icon: Lock },
   { id: 'unlocked', label: 'unlockedPlural', icon: LockOpen },
-  { id: 'offline', label: 'offlinePlural', icon: Unplug },
+  { id: 'offline', label: 'offlinePlural', icon: UnlockedOfflineIcon },
 ] as const
 
 export function FilterSwitch({
@@ -82,7 +84,25 @@ export function FilterSwitch({
         >
           <Icon size={18} aria-hidden="true" />
           <span className="filter-count">{counts[id]}</span>
-          <span className="filter-name">{t(label)}</span>
+          <span className="filter-name">
+            {id === 'offline' ? (
+              <>
+                <span className="filter-label-full">{t(label)}</span>
+                <span className="filter-label-short">
+                  {t('offlineFilterShort')
+                    .split('/')
+                    .map((part, index, parts) => (
+                      <span key={part}>
+                        {part}
+                        {index < parts.length - 1 ? '/' : ''}
+                      </span>
+                    ))}
+                </span>
+              </>
+            ) : (
+              t(label)
+            )}
+          </span>
         </button>
       ))}
     </div>

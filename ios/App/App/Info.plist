@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Boxyland Lock</string>
+	<string>BOXYLOCK DEMO</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -67,7 +67,7 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
 	<key>NSLocalNetworkUsageDescription</key>
-	<string>Boxyland Lock potrebuje prístup k lokálnej sieti na spojenie s ovládačom zámkov.</string>
+	<string>BOXYLOCK DEMO potrebuje prístup k lokálnej sieti na spojenie s ovládačom zámkov.</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>

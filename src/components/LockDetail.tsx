@@ -1,5 +1,5 @@
 import { useI18n } from '../lib/i18n'
-import { Lock, LockOpen, RotateCw, X } from 'lucide-react'
+import { Lock, LockOpen, RotateCw, X } from './BrandIcons'
 import { number, type BoxLock, type Connection } from '../lib/locks'
 import { StateIcon } from './LockIcon'
 

@@ -2,9 +2,9 @@ import type { CapacitorConfig } from '@capacitor/cli'
 
 const config: CapacitorConfig = {
   appId: 'sk.boxyland.locks',
-  appName: 'Boxyland Lock',
+  appName: 'BOXYLOCK DEMO',
   webDir: 'dist',
-  backgroundColor: '#f5f5f5',
+  backgroundColor: '#f9fdff',
   ios: { contentInset: 'never' },
 }
 
